@@ -22,6 +22,8 @@ A cozy pixel isekai town builder. Summon heroes, grow a village into a kingdom, 
 3. If Play Protect warns about an unknown app, tap **Install anyway** (it isn't from the Play Store).
 
 ## 🔄 Updating
-Just download and run/install the new version. **Your towns carry over automatically**. On Windows, the old save is also backed up first, to `%APPDATA%\Isekai Village\save-backups`.
+**From v128 on, the apps update themselves:** a small ✨ note on the title screen says when a new version is out, and one tap updates (or use **Settings → Town & Save → Game updates**). On Android, tap **Update** when Android asks; the first time, allow installs from Isekai Village.
+
+On an older version? Just download and run/install the new version. **Your towns carry over automatically**. On Windows, the old save is also backed up first, to `%APPDATA%\Isekai Village\save-backups`.
 
 Moving a town to another device? In the game, use **Settings → Town & Save → 💾 Save to a file**, then on the other device: **🏘 Towns & Saves → 📂 Bring Save File Over**.
