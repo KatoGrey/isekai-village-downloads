@@ -1,0 +1,13 @@
+{
+  "appId": "io.voyage.labs.isekaivillage",
+  "appName": "Isekai Village",
+  "webDir": "www",
+  "backgroundColor": "#2a2233",
+  "ios": {
+    "backgroundColor": "#2a2233",
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "allowsLinkPreview": false,
+    "webContentsDebuggingEnabled": false
+  }
+}

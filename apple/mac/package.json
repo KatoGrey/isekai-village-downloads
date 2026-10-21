@@ -1,0 +1,40 @@
+{
+  "name": "isekai-village",
+  "productName": "Isekai Village",
+  "version": "1.5.0",
+  "description": "Isekai Village: a cozy pixel isekai city builder (macOS build).",
+  "author": "Voyage Labs",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "app": "electron-builder --mac dir --universal"
+  },
+  "build": {
+    "appId": "io.voyage.labs.isekaivillage",
+    "productName": "Isekai Village",
+    "copyright": "Voyage Labs",
+    "files": [
+      "main.js",
+      "game/**/*"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.simulation-games",
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "darkModeSupport": true
+    },
+    "compression": "normal",
+    "asar": true
+  },
+  "devDependencies": {
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "isekai-village-ios",
+  "version": "1.5.0",
+  "private": true,
+  "description": "Isekai Village for iPhone and iPad: the web build in a full-screen app (Capacitor), like the Android app.",
+  "scripts": {
+    "shim": "esbuild shim/ios.ts --bundle --minify --format=iife --target=safari15 --outfile=www/ios.js"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/share": "^8.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "esbuild": "^0.28.2"
+  }
+}
