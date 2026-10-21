@@ -16,6 +16,7 @@
     "copyright": "Voyage Labs",
     "files": [
       "main.js",
+      "preload.js",
       "game/**/*"
     ],
     "directories": {

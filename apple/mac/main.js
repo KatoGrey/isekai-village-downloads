@@ -1,7 +1,7 @@
 // Isekai Village for macOS: the web build in its own window, as on Windows. It is served from a private app:// origin
 // so its ES modules, fetches and save data (localStorage, kept in ~/Library/Application Support/Isekai Village) behave
 // exactly as on the web. Outside the Voyage player the game runs on its own: sign-in, cloud saves and analytics stay off.
-const { app, BrowserWindow, Menu, protocol, shell } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, net, protocol, shell } = require('electron');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
@@ -21,7 +21,7 @@ if (!app.requestSingleInstanceLock()) app.quit();
 function createWindow(backup = '') {
   const win = new BrowserWindow({
     width: 1440, height: 900, minWidth: 960, minHeight: 600, title: 'Isekai Village', backgroundColor: '#2a2233', show: false,
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: !test },
+    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: !test, preload: path.join(__dirname, 'preload.js') },
   });
   win.once('ready-to-show', () => win.show());
   // ISEKAI_SHOT=<file.png> (the build's own check): a picture of the window after 40 seconds, then quit.
@@ -52,6 +52,26 @@ function menu() {
     { role: 'windowMenu' },
     { role: 'help', submenu: [{ label: 'Isekai Village downloads', click: () => shell.openExternal('https://github.com/KatoGrey/isekai-village-downloads/releases/latest') }] },
   ]));
+}
+
+// The game's "Game updates" card (preload.js): the newest release on the downloads repo, and its page. Updating is
+// downloading the new app by hand (see below), so nothing is downloaded here.
+const REPO = 'KatoGrey/isekai-village-downloads';
+function updates() {
+  ipcMain.handle('update:info', () => ({ kind: app.isPackaged ? 'mac' : 'dev', version: app.getVersion() }));
+  ipcMain.handle('update:check', async () => {
+    const res = await net.fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'IsekaiVillage-Mac' } });
+    if (!res.ok) throw new Error(`GitHub answered ${res.status}`);
+    const j = await res.json();
+    return {
+      tag: String(j.tag_name ?? ''), name: String(j.name ?? ''), body: String(j.body ?? ''), url: String(j.html_url ?? ''),
+      assets: (j.assets ?? []).map((a) => ({ name: String(a.name), url: String(a.browser_download_url), size: Number(a.size) || 0 })),
+    };
+  });
+  ipcMain.handle('update:open', (_e, url) => {
+    const u = String(url ?? '');
+    if (u.startsWith(`https://github.com/${REPO}`)) void shell.openExternal(u);
+  });
 }
 
 app.on('second-instance', () => {
@@ -90,6 +110,7 @@ async function backUpOnUpdate() {
 
 app.whenReady().then(async () => {
   menu();
+  updates();
   const backup = await backUpOnUpdate().catch(() => 'failed');
   // Files come straight off disk (the game loads ~2,800 sprites at boot; a network round-trip each is far too slow).
   protocol.handle('app', async (req) => {

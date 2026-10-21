@@ -40,6 +40,6 @@ Apple only lets App Store apps install with one tap, so the iPhone app goes on w
 
 On an older version? Just download and run/install the new version. **Your towns carry over automatically**. On Windows, the old save is also backed up first, to `%APPDATA%\Isekai Village\save-backups` (on a Mac, to `save-backups` in the folder above).
 
-**Mac and iPhone/iPad** don't update themselves yet: when a new version is out, download it here and open it (Mac) or install it over the old one (iPhone, with the same tool and Apple ID). Your towns stay.
+**Mac and iPhone/iPad** can't install updates by themselves. From v129 on, they tell you when a new version is out and open this page: download it here and open it (Mac) or install it over the old one (iPhone, with the same tool and Apple ID). Your towns stay.
 
 Moving a town to another device? In the game, use **Settings → Town & Save → 💾 Save to a file**, then on the other device: **🏘 Towns & Saves → 📂 Bring Save File Over**.
