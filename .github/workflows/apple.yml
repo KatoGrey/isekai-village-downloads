@@ -149,6 +149,9 @@ jobs:
           # The game's own first screen: its web view inside the safe area (native/GameViewController.swift). It joins
           # AppDelegate.swift, which already imports UIKit and Capacitor and is part of the Xcode project.
           sed '/^import /d' native/GameViewController.swift >> "$APPDIR/AppDelegate.swift"
+          # (Capacitor's SceneDelegate makes the first screen in code; the storyboard is changed to match.)
+          sed -i '' 's/window?.rootViewController = CAPBridgeViewController()/window?.rootViewController = GameViewController()/' "$APPDIR/SceneDelegate.swift"
+          grep -q 'rootViewController = GameViewController()' "$APPDIR/SceneDelegate.swift"
           sed -i '' 's/customClass="CAPBridgeViewController" customModule="Capacitor"/customClass="GameViewController" customModule="App" customModuleProvider="target"/' "$APPDIR/Base.lproj/Main.storyboard"
           grep -q 'GameViewController' "$APPDIR/Base.lproj/Main.storyboard"
           set_plist() { /usr/libexec/PlistBuddy -c "Set :$1 $3" "$PL" 2>/dev/null || /usr/libexec/PlistBuddy -c "Add :$1 $2 $3" "$PL"; }
